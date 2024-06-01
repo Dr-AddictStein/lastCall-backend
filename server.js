@@ -5,6 +5,7 @@ import cors from "cors";
 
 import userRoutes from "./routes/userRoutes.js";
 import cityRoutes from "./routes/cityRoutes.js";
+import regionRoutes from "./routes/regionRoutes.js";
 
 dotenv.config();
 
@@ -28,6 +29,9 @@ app.use("/api/user", userRoutes);
 
 // city
 app.use("/api/city", cityRoutes);
+
+// region
+app.use("/api/region", regionRoutes);
 
 
 
