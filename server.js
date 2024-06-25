@@ -6,6 +6,7 @@ import cors from "cors";
 import userRoutes from "./routes/userRoutes.js";
 import cityRoutes from "./routes/cityRoutes.js";
 import regionRoutes from "./routes/regionRoutes.js";
+import restaurantRoutes from "./routes/restaurantRoutes.js";
 
 dotenv.config();
 
@@ -32,6 +33,9 @@ app.use("/api/city", cityRoutes);
 
 // region
 app.use("/api/region", regionRoutes);
+
+// restaurant
+app.use("/api/region", restaurantRoutes);
 
 
 

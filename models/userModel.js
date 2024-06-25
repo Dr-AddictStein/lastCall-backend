@@ -41,6 +41,8 @@ userSchema.statics.signup = async function (
   const exist = await this.findOne({ email });
 
   if (exist) {
+    if(!password)
+      return exist;
     throw Error("Email already exists.!.");
   }
 
