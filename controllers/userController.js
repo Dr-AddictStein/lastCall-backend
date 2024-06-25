@@ -21,6 +21,7 @@ export const loginUser = async (req, res) => {
 export const singupUser = async (req, res) => {
   const { firstname, lastname, email, phone, password } = req.body;
   const role = "user";
+  console.log("ZZZZZZZZZZZZ",req.body)
   try {
     const user = await userModel.signup(
         firstname,
