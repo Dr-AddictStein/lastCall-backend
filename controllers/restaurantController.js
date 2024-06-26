@@ -1,5 +1,9 @@
 import mongoose from "mongoose";
 import restaurantModel from "../models/restaurantModel.js";
+import dotenv from "dotenv";
+import { notifyAdminMail } from "../mailServices/mail.js";
+
+dotenv.config();
 
 export const getAllRestaurants = async (req, res) => {
   const cities = await restaurantModel.find({});
@@ -57,3 +61,9 @@ export const deleteRestaurant = async (req, res) => {
     return res.status(400).json({ error: "No Such restaurant Found.!." });
   }
 };
+
+export const notifyAdmin = async(req,res)=>{
+  const data = req.body;
+  await notifyAdminMail(process.env.SUPER_ADMIN_MAIL,data);
+  res.status(200).json({message:"Mail has been sent to SUper Admin Successfully.!."});
+}

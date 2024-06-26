@@ -1,5 +1,5 @@
 import express from 'express';
-import { createRestaurant, deleteRestaurant, getAllRestaurants, getSingleRestaurant, updateRestaurant } from '../controllers/restaurantController.js';
+import { createRestaurant, deleteRestaurant, getAllRestaurants, getSingleRestaurant, notifyAdmin, updateRestaurant } from '../controllers/restaurantController.js';
 
 
 const router=express.Router();
@@ -10,6 +10,7 @@ router.get('/:id',getSingleRestaurant);
 
 
 router.post('/',createRestaurant);
+router.post('/notifyadmin',notifyAdmin);
 
 router.patch('/:id',updateRestaurant);
 

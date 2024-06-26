@@ -35,7 +35,7 @@ app.use("/api/city", cityRoutes);
 app.use("/api/region", regionRoutes);
 
 // restaurant
-app.use("/api/region", restaurantRoutes);
+app.use("/api/restaurant", restaurantRoutes);
 
 
 
