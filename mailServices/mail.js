@@ -72,3 +72,32 @@ export const notifyAdminMail = async (to, data) => {
         throw error;
     }
 };
+
+
+export const notifyRestaurantAdminMail = async ( name, email, password) => {
+    console.log("HERE DATA<<<", name,email,password)
+    const subject = "Your Restaurant has been verified.!.";
+    const emailContent = `
+    <p>Dear ${name},</p>
+    <p>Your Restaurant has been verified by the Last Call Management.</p>
+    <p>Here are your login Credentials:</p>
+    <p><strong>Email: </strong>${email}</p>
+    <p><strong>Password: </strong>${password}</p>
+    <p>You can and recommended to change your password anytime from the profile page of Last Call Website.</p>
+    <p>Best regards,</p>
+    <p>Last Call Mail System</p>
+  `;
+
+    try {
+        let info = await transporter.sendMail({
+            from: '"Last Call" <your-email@gmail.com>',
+            to: email,
+            subject: subject,
+            html: emailContent,
+        });
+        console.log("Message sent: %s", info.messageId);
+    } catch (error) {
+        console.error("Error sending email:", error);
+        throw error;
+    }
+};

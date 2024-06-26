@@ -9,7 +9,7 @@ router.get('/',getAllRestaurants);
 router.get('/:id',getSingleRestaurant);
 
 
-router.post('/',createRestaurant);
+router.post('/add',createRestaurant);
 router.post('/notifyadmin',notifyAdmin);
 
 router.patch('/:id',updateRestaurant);
