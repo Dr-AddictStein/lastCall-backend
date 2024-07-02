@@ -4,8 +4,8 @@ import { createUser, deleteUser, getAllUsers, getSingleUser, loginUser, singupUs
 const router = express.Router();
 
 
-router.post('/login',loginUser)
-router.post('/signup',singupUser)
+router.post('/login',loginUser);
+router.post('/signup',singupUser);
 
 router.get('/',getAllUsers);
 router.get('/:id',getSingleUser);
