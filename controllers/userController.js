@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import { notifyRestaurantAdminMail } from "../mailServices/mail.js";
 import userModel from "../models/userModel.js";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
 const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "3d" });
@@ -23,15 +24,15 @@ export const loginUser = async (req, res) => {
 export const singupUser = async (req, res) => {
   const { firstname, lastname, email, phone, password } = req.body;
   const role = "user";
-  console.log("ZZZZZZZZZZZZ",req.body)
+  console.log("ZZZZZZZZZZZZ", req.body)
   try {
     const user = await userModel.signup(
-        firstname,
-        lastname,
-        email,
-        role,
-        phone,
-        password
+      firstname,
+      lastname,
+      email,
+      role,
+      phone,
+      password
     );
 
     const token = createToken(user._id);
@@ -60,12 +61,16 @@ export const getSingleUser = async (req, res) => {
   }
 };
 export const createUser = async (req, res) => {
-  console.log("REQ",req.body)
+  console.log("REQ", req.body)
+  const { firstname, lastname, email, password, role, phone } = req.body;
+  const salt = await bcrypt.genSalt(10);
+  const hash = await bcrypt.hash(password, salt);
+  const data ={firstname, lastname, email, password:hash, role, phone}
   try {
-    const newUser = new userModel(req.body);
+    const newUser = new userModel(data);
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
-    await notifyRestaurantAdminMail(req.body.firstname,req.body.email,req.body.password);
+    await notifyRestaurantAdminMail(req.body.firstname, req.body.email, req.body.password);
     return;
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -74,7 +79,7 @@ export const createUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   const { id } = req.params;
-  console.log("HERIYE",req.body)
+  console.log("HERIYE", req.body)
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "Invalid ID.!." });
   }
