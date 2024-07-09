@@ -64,8 +64,9 @@ export const createUser = async (req, res) => {
   try {
     const newUser = new userModel(req.body);
     const savedUser = await newUser.save();
-    await notifyRestaurantAdminMail(req.body.firstname,req.body.email,req.body.password);
     res.status(201).json(savedUser);
+    await notifyRestaurantAdminMail(req.body.firstname,req.body.email,req.body.password);
+    return;
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
