@@ -19,6 +19,7 @@ export const getSingleCity = async (req, res) => {
   }
 };
 export const createCity = async (req, res) => {
+  console.log("HEREFROMREGIONCREATIONB",req.body)
   try {
     const newCity = new cityModel(req.body);
     const savedCity = await newCity.save();

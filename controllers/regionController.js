@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import regionModel from "../models/regionModel.js";
-import City from "../models/cityModel.js";
+import cityModel from "../models/cityModel.js";
+import { createCity } from "./cityController.js";
 
 export const getAllRegions = async (req, res) => {
   const regions = await regionModel.find({}).populate("cities");
@@ -20,24 +21,28 @@ export const getSingleRegion = async (req, res) => {
   }
 };
 export const createRegion = async (req, res) => {
+
+  console.log("REGGGGG", req.body)
   try {
-    const { name, cityIds } = req.body;
+    const { name, cities } = req.body;
 
-    // Ensure cityIds is an array
-    if (!Array.isArray(cityIds)) {
-      return res.status(400).json({ error: "cityIds must be an array" });
-    }
 
-    // Validate if the provided city IDs exist in the database
-    const cities = await City.find({ _id: { $in: cityIds } });
 
-    if (cities.length !== cityIds.length) {
-      return res.status(404).json({ error: "One or more cities not found" });
+    for (let i = 0; i < cities.length; i++) {
+      const city = {
+        name: cities[i],
+        region: req.body.name
+      }
+
+      const newCity = new cityModel(city);
+      const savedCity = await newCity.save();
+
+
     }
 
     const newRegion = new regionModel({
       name,
-      cities: cityIds,
+      cities
     });
 
     await newRegion.save();
@@ -52,6 +57,28 @@ export const updateRegion = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "Invalid ID.!." });
+  }
+  const { name, cities } = req.body;
+
+
+
+  const currCities = await cityModel.find({ region: req.body.name });
+  console.log("UPREG", currCities)
+  for (let i = 0; i < currCities.length; i++) {
+    const deleteCity = await cityModel.findByIdAndDelete(currCities[i]._id);
+  }
+
+
+  for (let i = 0; i < cities.length; i++) {
+    const city = {
+      name: cities[i],
+      region: req.body.name
+    }
+
+    const newCity = new cityModel(city);
+    const savedCity = await newCity.save();
+
+
   }
   const region = await regionModel.findOneAndUpdate(
     { _id: id },
@@ -70,6 +97,15 @@ export const deleteRegion = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "Invalid ID.!." });
+  }
+
+  const reg = await regionModel.findById(id);
+
+
+  console.log("UPREGDEL", req.body)
+  const currCities = await cityModel.find({ region: reg.name });
+  for (let i = 0; i < currCities.length; i++) {
+    const deleteCity = await cityModel.findByIdAndDelete(currCities[i]._id);
   }
 
   const region = await regionModel.findOneAndDelete({ _id: id });

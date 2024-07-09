@@ -6,11 +6,15 @@ const citySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    region: {
+      type: String,
+      required: true
+    }
   },
   { timestamps: true }
 );
 
 
-const city = mongoose.model("CityCollection",citySchema);
+const city = mongoose.model("CityCollection", citySchema);
 
 export default city;

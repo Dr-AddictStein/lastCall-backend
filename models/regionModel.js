@@ -6,12 +6,7 @@ const regionSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    cities: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "CityCollection",
-      },
-    ],
+    cities:[String]
   },
   { timestamps: true }
 );
