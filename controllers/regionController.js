@@ -55,6 +55,10 @@ export const createRegion = async (req, res) => {
 
 export const updateRegion = async (req, res) => {
   const { id } = req.params;
+
+  const prevRegion = await regionModel.findById(id);
+
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "Invalid ID.!." });
   }
@@ -62,7 +66,7 @@ export const updateRegion = async (req, res) => {
 
 
 
-  const currCities = await cityModel.find({ region: req.body.name });
+  const currCities = await cityModel.find({ region: prevRegion.name });
   console.log("UPREG", currCities)
   for (let i = 0; i < currCities.length; i++) {
     const deleteCity = await cityModel.findByIdAndDelete(currCities[i]._id);
