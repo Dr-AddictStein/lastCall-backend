@@ -22,6 +22,17 @@ export const getSingleRestaurant = async (req, res) => {
     return res.status(400).json({ error: "No Such Restaurant Found.!." });
   }
 };
+export const getSingleRestaurantByOwnerEmail = async (req, res) => {
+  const { email } = req.params;
+
+  const restaurant = await restaurantModel.findOne({email:email});;
+
+  if (restaurant) {
+    res.status(200).json(restaurant);
+  } else {
+    return res.status(400).json({ error: "No Such Restaurant Found.!." });
+  }
+};
 export const createRestaurant = async (req, res) => {
   try {
     const newRestaurant = new restaurantModel(req.body);
@@ -34,12 +45,17 @@ export const createRestaurant = async (req, res) => {
 
 export const updateRestaurant = async (req, res) => {
   const { id } = req.params;
+
+  
+  console.log("REsUPDATE",req.body);
+  
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "Invalid ID.!." });
   }
   const restaurant = await restaurantModel.findOneAndUpdate({ _id: id }, { ...req.body });
-
+  
   if (restaurant) {
+    console.log("UPDATED.!.!.!.",restaurant);
     const toSend = await restaurantModel.findById(id);
     res.status(200).json(toSend);
   } else {

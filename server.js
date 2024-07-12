@@ -7,6 +7,7 @@ import userRoutes from "./routes/userRoutes.js";
 import cityRoutes from "./routes/cityRoutes.js";
 import regionRoutes from "./routes/regionRoutes.js";
 import restaurantRoutes from "./routes/restaurantRoutes.js";
+import fileRoutes from "./routes/fileRoutes.js";
 
 dotenv.config();
 
@@ -36,6 +37,9 @@ app.use("/api/region", regionRoutes);
 
 // restaurant
 app.use("/api/restaurant", restaurantRoutes);
+
+//file
+app.use("/api/file",fileRoutes);
 
 
 

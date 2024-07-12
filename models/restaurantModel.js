@@ -38,6 +38,28 @@ const restaurantSchema = new mongoose.Schema(
             type: String,
             // required: true,
         },
+        banner:{
+            type: String,
+        },
+        image1:{
+            type: String,
+        },
+        image2:{
+            type: String,
+        },
+        image3:{
+            type: String,
+        },
+        image4:{
+            type: String,
+        },
+        operatinghours:{
+            type: String,
+        },
+        specialconditions:[String],
+        description:{
+            type: String,
+        }
     },
     { timestamps: true }
 );
