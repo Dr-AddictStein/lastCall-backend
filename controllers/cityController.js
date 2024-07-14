@@ -23,7 +23,8 @@ export const createCity = async (req, res) => {
 
   const data = {
     name: req.body.name,
-    region: req.body.region
+    region: req.body.region,
+    image: req.body.image
   };
 
 
