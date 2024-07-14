@@ -79,7 +79,7 @@ export const createUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   const { id } = req.params;
-  console.log("HERIYE", req.body)
+  console.log("HERIYE", req.body);
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "Invalid ID.!." });
   }
