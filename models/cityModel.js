@@ -9,6 +9,9 @@ const citySchema = new mongoose.Schema(
     region: {
       type: String,
       required: true
+    },
+    image:{
+      type: String,
     }
   },
   { timestamps: true }
