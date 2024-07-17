@@ -39,7 +39,8 @@ userSchema.statics.signup = async function (
   email,
   role,
   phone,
-  password
+  password,
+  image
 ) {
   const exist = await this.findOne({ email });
 
@@ -71,6 +72,7 @@ userSchema.statics.signup = async function (
       role,
       phone,
       password: hash,
+      image
     });
 
     return user;
@@ -84,6 +86,7 @@ userSchema.statics.signup = async function (
       email,
       role,
       phone,
+      image
     });
 
     return user;

@@ -22,7 +22,7 @@ export const loginUser = async (req, res) => {
 };
 
 export const singupUser = async (req, res) => {
-  const { firstname, lastname, email, phone, password } = req.body;
+  const { firstname, lastname, email, phone, password, image } = req.body;
   const role = "user";
   console.log("ZZZZZZZZZZZZ", req.body)
   try {
@@ -32,7 +32,8 @@ export const singupUser = async (req, res) => {
       email,
       role,
       phone,
-      password
+      password,
+      image
     );
 
     const token = createToken(user._id);
@@ -46,6 +47,11 @@ export const singupUser = async (req, res) => {
 export const getAllUsers = async (req, res) => {
   const cities = await userModel.find({});
   res.status(200).json(cities);
+};
+export const getSingleUserByEmail = async (req, res) => {
+  const { email } = req.params;
+  const user = await userModel.findOne({ email: email });
+  res.status(200).json(user);
 };
 export const getSingleUser = async (req, res) => {
   const { id } = req.params;
@@ -65,7 +71,7 @@ export const createUser = async (req, res) => {
   const { firstname, lastname, email, password, role, phone } = req.body;
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
-  const data ={firstname, lastname, email, password:hash, role, phone}
+  const data = { firstname, lastname, email, password: hash, role, phone }
   try {
     const newUser = new userModel(data);
     const savedUser = await newUser.save();
@@ -83,14 +89,33 @@ export const updateUser = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "Invalid ID.!." });
   }
-  const user = await userModel.findOneAndUpdate({ _id: id }, { ...req.body });
 
-  if (user) {
-    const toSend = await userModel.findById(id);
-    res.status(200).json(toSend);
-  } else {
-    return res.status(400).json({ error: "No Such User Found.!." });
+  const prevUser = await userModel.findById(id);
+
+  const salt = await bcrypt.genSalt(10);
+  const hash = await bcrypt.hash(req.body.password, salt);
+
+  if (req.body.password === '') {
+    const user = await userModel.findOneAndUpdate({ _id: id }, { ...req.body, password: prevUser.password });
+
+    if (user) {
+      const toSend = await userModel.findById(id);
+      res.status(200).json(toSend);
+    } else {
+      return res.status(400).json({ error: "No Such User Found.!." });
+    }
   }
+  else{
+    const user = await userModel.findOneAndUpdate({ _id: id }, { ...req.body, password: hash });
+  
+    if (user) {
+      const toSend = await userModel.findById(id);
+      res.status(200).json(toSend);
+    } else {
+      return res.status(400).json({ error: "No Such User Found.!." });
+    }
+  }
+
 };
 
 export const deleteUser = async (req, res) => {
