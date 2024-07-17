@@ -59,7 +59,8 @@ const restaurantSchema = new mongoose.Schema(
         specialconditions:[String],
         description:{
             type: String,
-        }
+        },
+        category:[String]
     },
     { timestamps: true }
 );
