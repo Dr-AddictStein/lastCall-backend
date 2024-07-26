@@ -60,7 +60,24 @@ const restaurantSchema = new mongoose.Schema(
         description:{
             type: String,
         },
-        category:[String]
+        category:[String],
+        tables:[
+            {
+                date: String,
+                breakfast:{
+                    starts: String,
+                    accomodations: String
+                },
+                lunch:{
+                    starts: String,
+                    accomodations: String
+                },
+                lastcall:{
+                    starts: String,
+                    accomodations: String
+                }
+            }
+        ]
     },
     { timestamps: true }
 );

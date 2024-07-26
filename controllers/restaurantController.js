@@ -83,3 +83,31 @@ export const notifyAdmin = async(req,res)=>{
   await notifyAdminMail(process.env.SUPER_ADMIN_MAIL,data);
   res.status(200).json({message:"Mail has been sent to SUper Admin Successfully.!."});
 }
+
+
+export const addTable=async(req,res)=>{
+  const {email} = req.params;
+  const prevRest = await restaurantModel.findOne({email:email});
+
+  let dex=prevRest;
+
+  dex.tables.push(req.body);
+
+  const restaurant = await restaurantModel.findOneAndUpdate(
+    {
+      email:email
+    },
+    {
+      dex
+    }
+  )
+
+  if (restaurant) {
+    console.log("UPDATED.!.!.!.",restaurant);
+    const toSend = await restaurantModel.findById(dex._id);
+    res.status(200).json(toSend);
+  } else {
+    return res.status(400).json({ error: "No Such Restaurant Found.!." });
+  }
+
+}
