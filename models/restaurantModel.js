@@ -63,18 +63,32 @@ const restaurantSchema = new mongoose.Schema(
         category:[String],
         tables:[
             {
-                date: String,
+                date:{
+                    type: String,
+                },
                 breakfast:{
-                    starts: String,
-                    accomodations: String
+                    starts:{
+                        type: String,
+                    },
+                    accomodations:{
+                        type: String,
+                    },
                 },
                 lunch:{
-                    starts: String,
-                    accomodations: String
+                    starts:{
+                        type: String,
+                    },
+                    accomodations:{
+                        type: String,
+                    },
                 },
                 lastcall:{
-                    starts: String,
-                    accomodations: String
+                    starts:{
+                        type: String,
+                    },
+                    accomodations:{
+                        type: String,
+                    },
                 }
             }
         ]

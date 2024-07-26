@@ -25,7 +25,7 @@ export const getSingleRestaurant = async (req, res) => {
 export const getSingleRestaurantByOwnerEmail = async (req, res) => {
   const { email } = req.params;
 
-  const restaurant = await restaurantModel.findOne({email:email});;
+  const restaurant = await restaurantModel.findOne({ email: email });;
 
   if (restaurant) {
     res.status(200).json(restaurant);
@@ -46,16 +46,16 @@ export const createRestaurant = async (req, res) => {
 export const updateRestaurant = async (req, res) => {
   const { id } = req.params;
 
-  
-  console.log("REsUPDATE",req.body);
-  
+
+  console.log("REsUPDATE", req.body);
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "Invalid ID.!." });
   }
   const restaurant = await restaurantModel.findOneAndUpdate({ _id: id }, { ...req.body });
-  
+
   if (restaurant) {
-    console.log("UPDATED.!.!.!.",restaurant);
+    console.log("UPDATED.!.!.!.", restaurant);
     const toSend = await restaurantModel.findById(id);
     res.status(200).json(toSend);
   } else {
@@ -78,32 +78,82 @@ export const deleteRestaurant = async (req, res) => {
   }
 };
 
-export const notifyAdmin = async(req,res)=>{
+export const notifyAdmin = async (req, res) => {
   const data = req.body;
-  await notifyAdminMail(process.env.SUPER_ADMIN_MAIL,data);
-  res.status(200).json({message:"Mail has been sent to SUper Admin Successfully.!."});
+  await notifyAdminMail(process.env.SUPER_ADMIN_MAIL, data);
+  res.status(200).json({ message: "Mail has been sent to SUper Admin Successfully.!." });
 }
 
 
-export const addTable=async(req,res)=>{
-  const {email} = req.params;
-  const prevRest = await restaurantModel.findOne({email:email});
+export const addTable = async (req, res) => {
+  const { id } = req.params;
+  const prevRest = await restaurantModel.findById(id);
 
-  let dex=prevRest;
+  let dex = prevRest;
 
-  dex.tables.push(req.body);
+  let found = false;
+  for (let i = 0; i < dex.tables.length; i++) {
+    if (dex.tables[i].date === req.body.date) {
+      found = true;
+      dex.tables[i] = req.body;
+      break;
+    }
+  }
+
+  if (!found) {
+    dex.tables.push(req.body);
+  }
+  console.log("UPDATED.!.!.!.", dex);
 
   const restaurant = await restaurantModel.findOneAndUpdate(
     {
-      email:email
+      _id: id
     },
     {
-      dex
+      ...dex
     }
   )
 
   if (restaurant) {
-    console.log("UPDATED.!.!.!.",restaurant);
+    const toSend = await restaurantModel.findById(dex._id);
+    res.status(200).json(toSend);
+  } else {
+    return res.status(400).json({ error: "No Such Restaurant Found.!." });
+  }
+
+}
+
+
+export const deleteTable = async (req, res) => {
+  const { id } = req.params;
+  const prevRest = await restaurantModel.findById(id);
+
+  let dex = prevRest;
+
+  let tex=[]
+
+  for (let i = 0; i < dex.tables.length; i++) {
+    if (dex.tables[i].date !== req.body.data.date) {
+      tex.push(dex.tables[i]);
+    }
+  }
+
+  dex.tables=tex;
+
+
+  console.log("Dateo.!.!.!.", req.body);
+  console.log("UPDATED.!.!.!.", tex);
+
+  const restaurant = await restaurantModel.findOneAndUpdate(
+    {
+      _id: id
+    },
+    {
+      ...dex
+    }
+  )
+
+  if (restaurant) {
     const toSend = await restaurantModel.findById(dex._id);
     res.status(200).json(toSend);
   } else {
