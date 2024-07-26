@@ -66,6 +66,9 @@ const restaurantSchema = new mongoose.Schema(
                 date:{
                     type: String,
                 },
+                isclosed:{
+                    type: Boolean
+                },
                 breakfast:{
                     starts:{
                         type: String,
@@ -82,14 +85,22 @@ const restaurantSchema = new mongoose.Schema(
                         type: String,
                     },
                 },
-                lastcall:{
+                dinnerfirstcall:{
                     starts:{
                         type: String,
                     },
                     accomodations:{
                         type: String,
                     },
-                }
+                },
+                dinnerlastcall:{
+                    starts:{
+                        type: String,
+                    },
+                    accomodations:{
+                        type: String,
+                    },
+                },
             }
         ]
     },

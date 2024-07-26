@@ -161,3 +161,83 @@ export const deleteTable = async (req, res) => {
   }
 
 }
+
+
+
+// New controller to add tables for all specific weekdays for the next 3 years
+export const addWeekdayTables = async (req, res) => {
+  const { id } = req.params;
+  const { isclosed, breakfast, lunch, dinnerfirstcall, dinnerlastcall, dayOfWeek } = req.body;
+  const prevRest = await restaurantModel.findById(id);
+
+  let dex = prevRest;
+
+  const weekdays = getAllWeekdays(dayOfWeek);
+
+  weekdays.forEach(day => {
+    const formattedDate = day.toLocaleDateString('en-GB', { weekday: 'short', day: '2-digit', month: 'long', year: 'numeric' });
+    let found = false;
+    for (let i = 0; i < dex.tables.length; i++) {
+      if (dex.tables[i].date === formattedDate) {
+        found = true;
+        dex.tables[i] = { date: formattedDate, isclosed, breakfast, lunch, dinnerfirstcall, dinnerlastcall };
+        break;
+      }
+    }
+
+    if (!found) {
+      dex.tables.push({ date: formattedDate, isclosed, breakfast, lunch, dinnerfirstcall, dinnerlastcall });
+    }
+  });
+
+  console.log("UPDATED WEEKDAYS.!.!.!.", dex);
+
+  const restaurant = await restaurantModel.findOneAndUpdate(
+    {
+      _id: id
+    },
+    {
+      ...dex
+    }
+  );
+
+  if (restaurant) {
+    const toSend = await restaurantModel.findById(dex._id);
+    res.status(200).json(toSend);
+  } else {
+    return res.status(400).json({ error: "No Such Restaurant Found.!." });
+  }
+}
+
+// Helper function to get all specific weekdays for the next 3 years
+const getAllWeekdays = (dayOfWeek) => {
+  const weekdays = [];
+  const currentDate = new Date();
+  const endDate = new Date(currentDate.getFullYear() + 3, currentDate.getMonth(), currentDate.getDate());
+
+  // Convert dayOfWeek to corresponding integer (0 for Sunday, 1 for Monday, etc.)
+  const dayOfWeekMap = {
+    Sunday: 0,
+    Monday: 1,
+    Tuesday: 2,
+    Wednesday: 3,
+    Thursday: 4,
+    Friday: 5,
+    Saturday: 6,
+  };
+
+  const dayOfWeekInt = dayOfWeekMap[dayOfWeek];
+
+  // Find the next occurrence of the specified dayOfWeek
+  while (currentDate.getDay() !== dayOfWeekInt) {
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  while (currentDate <= endDate) {
+    weekdays.push(new Date(currentDate));
+    currentDate.setDate(currentDate.getDate() + 7);
+  }
+
+  console.log("ZsP", weekdays);
+  return weekdays;
+};
