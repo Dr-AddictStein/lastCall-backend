@@ -6,7 +6,7 @@ import restaurantModel from "../models/restaurantModel.js";
 import restaurant from '../models/restaurantModel.js';
 
 const router = express.Router();
-const stripe = new Stripe('sk_test_51PjrgT2MktoZh11i373BEtLa1QJAHlw164OJubf7jOHtgbfnlpLeYdwn4mDS9CKNISMIU4SiIuvlcNBAi4TCzHs700JIXyB83J');
+const stripe = new Stripe('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');
 
 router.post('/create-checkout-session', async (req, res) => {
     console.log("Reached: ",req.body)

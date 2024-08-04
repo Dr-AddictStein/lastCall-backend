@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import restaurantModel from "../models/restaurantModel.js";
 import dotenv from "dotenv";
-import { notifyAdminMail } from "../mailServices/mail.js";
+import { contactAdminMail, notifyAdminMail, suggestAdminMail } from "../mailServices/mail.js";
 import reservationModel from '../models/reservationModel.js';
 
 dotenv.config();
@@ -104,6 +104,16 @@ export const deleteRestaurant = async (req, res) => {
 export const notifyAdmin = async (req, res) => {
   const data = req.body;
   await notifyAdminMail(process.env.SUPER_ADMIN_MAIL, data);
+  res.status(200).json({ message: "Mail has been sent to SUper Admin Successfully.!." });
+}
+export const contactAdmin = async (req, res) => {
+  const data = req.body;
+  await contactAdminMail(process.env.SUPER_ADMIN_MAIL, data);
+  res.status(200).json({ message: "Mail has been sent to SUper Admin Successfully.!." });
+}
+export const suggestAdmin = async (req, res) => {
+  const data = req.body;
+  await suggestAdminMail(process.env.SUPER_ADMIN_MAIL, data);
   res.status(200).json({ message: "Mail has been sent to SUper Admin Successfully.!." });
 }
 

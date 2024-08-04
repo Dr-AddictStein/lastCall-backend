@@ -50,10 +50,72 @@ export const notifyAdminMail = async (to, data) => {
     <p>Here are the details:</p>
     <p><strong>Restaurant Name: </strong>${data.restaurantName}</p>
     <p><strong>City: </strong>${data.city}</p>
-    <p><strong>Region: </strong>${data.regionAu}</p>
+    <p><strong>Region: </strong>${data.region}</p>
     <p><strong>Restaurant Owner Name: </strong>${data.firstName + ' ' + data.lastName}</p>
     <p><strong>Restaurant Owner Mail: </strong>${data.email}</p>
     <p><strong>Restaurant Owner Phone: </strong>${data.phoneNumber}</p>
+    <p>Now, you may contact them through the info provided above and keep expanding our business...</p>
+    <p>Best regards,</p>
+    <p>Last Call Mail System</p>
+  `;
+
+    try {
+        let info = await transporter.sendMail({
+            from: '"Last Call" <your-email@gmail.com>',
+            to: to,
+            subject: subject,
+            html: emailContent,
+        });
+        console.log("Message sent: %s", info.messageId);
+    } catch (error) {
+        console.error("Error sending email:", error);
+        throw error;
+    }
+};
+export const contactAdminMail = async (to, data) => {
+    console.log("HERE DATA<<<", to, data)
+    const subject = "Someone Contacted You from the Contact Us Page.";
+    const emailContent = `
+    <p>Dear Admin,</p>
+    <p>Someone Contacted You from the Contact Us Page.</p>
+    <p>Here are the details:</p>
+    <p><strong>First Name: </strong>${data.firstName}</p>
+    <p><strong>Last Name: </strong>${data.lastName}</p>
+    <p><strong>Email: </strong>${data.email}</p>
+    <p><strong>Phone: </strong>${data.phone}</p>
+    <p><strong>City: </strong>${data.city}</p>
+    <p><strong>Message: </strong>${data.message}</p>
+    <p>Now, you may contact them through the info provided above and keep expanding our business...</p>
+    <p>Best regards,</p>
+    <p>Last Call Mail System</p>
+  `;
+
+    try {
+        let info = await transporter.sendMail({
+            from: '"Last Call" <your-email@gmail.com>',
+            to: to,
+            subject: subject,
+            html: emailContent,
+        });
+        console.log("Message sent: %s", info.messageId);
+    } catch (error) {
+        console.error("Error sending email:", error);
+        throw error;
+    }
+};
+export const suggestAdminMail = async (to, data) => {
+    console.log("HERE DATA<<<", to, data)
+    const subject = "Someone Suggested a Restaurant.";
+    const emailContent = `
+    <p>Dear Admin,</p>
+    <p>Someone Suggested a Restaurant.</p>
+    <p>Here are the details:</p>
+    <p><strong>First Name: </strong>${data.firstName}</p>
+    <p><strong>Last Name: </strong>${data.lastName}</p>
+    <p><strong>Email: </strong>${data.email}</p>
+    <p><strong>Phone: </strong>${data.phone}</p>
+    <p><strong>City: </strong>${data.city}</p>
+    <p><strong>Restaurant Name: </strong>${data.restaurant}</p>
     <p>Now, you may contact them through the info provided above and keep expanding our business...</p>
     <p>Best regards,</p>
     <p>Last Call Mail System</p>
