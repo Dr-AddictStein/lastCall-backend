@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import restaurantModel from "../models/restaurantModel.js";
 import dotenv from "dotenv";
 import { notifyAdminMail } from "../mailServices/mail.js";
+import reservationModel from '../models/reservationModel.js';
 
 dotenv.config();
 
@@ -28,9 +29,31 @@ export const getSingleRestaurantByOwnerEmail = async (req, res) => {
   const restaurant = await restaurantModel.findOne({ email: email });;
 
   if (restaurant) {
-    res.status(200).json(restaurant);
+    return res.status(200).json(restaurant);
   } else {
     return res.status(400).json({ error: "No Such Restaurant Found.!." });
+  }
+};
+export const getReservations = async (req, res) => {
+  const { email } = req.params;
+
+  try {
+    const restaurant = await restaurantModel.findOne({ email: email });
+    if (!restaurant) {
+      return res.status(404).json({ error: "No Such Restaurant Found." });
+    }
+
+    const resvs = await reservationModel.find({});
+    const dex = resvs.filter((resv) => {
+      return String(resv.restaurant._id) === String(restaurant._id);
+    });
+
+    console.log("Filtered Reservations:", dex);
+
+    return res.status(200).json(dex);
+  } catch (error) {
+    console.error("Error fetching reservations:", error);
+    return res.status(500).json({ error: "Server error" });
   }
 };
 export const createRestaurant = async (req, res) => {
