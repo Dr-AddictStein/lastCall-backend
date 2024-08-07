@@ -10,7 +10,8 @@ const router = express.Router();
 const stripe = new Stripe('sk_test_51Pb6MZRqpEIBbqVXD8AaE8G3z65hOxYP908oVaun7IGx5SSZqAfvlrzgiOtsp1k8ySo7mqofnx9vD4mobGoXns8E00rgL7qlVU');
 
 router.post('/create-checkout-session', async (req, res) => {
-    console.log("Reached: ",req.body)
+  console.log("Reached: ", req.body)
+  const restu = await restaurantModel.findById(req.body.restaurant);
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
     line_items: [
@@ -18,8 +19,7 @@ router.post('/create-checkout-session', async (req, res) => {
         price_data: {
           currency: 'usd',
           product_data: {
-            name: 'T-shirt',
-            images: ["https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Flag_of_Bangladesh.svg/1200px-Flag_of_Bangladesh.svg.png"],
+            name: `Booking at ${restu.name}`,
           },
           unit_amount: 1000, // Amount in cents
         },
@@ -31,18 +31,17 @@ router.post('/create-checkout-session', async (req, res) => {
     cancel_url: `http://localhost:5173/foodDetails/${req.body.restaurant}`,
   });
 
-  const restu = await restaurantModel.findById(req.body.restaurant);
 
-  const resv=new reservationModel({
+  const resv = new reservationModel({
     ...req.body,
-    restaurant:restu
-});
-  const savedResv=await resv.save();
+    restaurant: restu
+  });
+  const savedResv = await resv.save();
 
-  
+
   res.json({ id: session.id, reservation: savedResv });
   await notifyBookerMail(savedResv);
-  await notifyBookingAdminMail(process.env.SUPER_ADMIN_MAIL,savedResv);
+  await notifyBookingAdminMail(process.env.SUPER_ADMIN_MAIL, savedResv);
 });
 
 export default router;

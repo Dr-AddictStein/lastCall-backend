@@ -53,9 +53,7 @@ const restaurantSchema = new mongoose.Schema(
         image4:{
             type: String,
         },
-        operatinghours:{
-            type: String,
-        },
+        operatinghours:[String],
         specialconditions:[String],
         description:{
             type: String,
