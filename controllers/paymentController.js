@@ -4,9 +4,10 @@ import Stripe from 'stripe';
 import reservationModel from '../models/reservationModel.js';
 import restaurantModel from "../models/restaurantModel.js";
 import restaurant from '../models/restaurantModel.js';
+import { notifyBookerMail, notifyBookingAdminMail } from '../mailServices/mail.js';
 
 const router = express.Router();
-const stripe = new Stripe('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');
+const stripe = new Stripe('sk_test_51Pb6MZRqpEIBbqVXD8AaE8G3z65hOxYP908oVaun7IGx5SSZqAfvlrzgiOtsp1k8ySo7mqofnx9vD4mobGoXns8E00rgL7qlVU');
 
 router.post('/create-checkout-session', async (req, res) => {
     console.log("Reached: ",req.body)
@@ -38,7 +39,10 @@ router.post('/create-checkout-session', async (req, res) => {
 });
   const savedResv=await resv.save();
 
+  
   res.json({ id: session.id, reservation: savedResv });
+  await notifyBookerMail(savedResv);
+  await notifyBookingAdminMail(process.env.SUPER_ADMIN_MAIL,savedResv);
 });
 
 export default router;

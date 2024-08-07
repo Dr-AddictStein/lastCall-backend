@@ -12,34 +12,7 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-export const sendWelcomeEmail = async (to, fullName) => {
-    console.log("Here : SEND: ", to);
-    const subject = "Thank You for Joining the BookedPlus Waitlist!";
-    const emailContent = `
-    <p>Dear ${fullName},</p>
-    <p>Thank you for joining the BookedPlus waitlist! We're excited to have you on board and appreciate your interest in our platform.</p>
-    <p>By signing up, you have automatically enrolled in a 3-month free trial of BookedPlus at the time of our release. Additionally, you now have a chance to win a 6-month free trial if selected from our random poll. On the release date, we will choose 10 lucky waitlist members for this special offer.</p>
-    <p>We look forward to providing you with a seamless and efficient online catering reservation experience. In the meantime, feel free to <a href="https://bookedplus.com/blogs">visit BookedPlus Learn</a> where we regularly post blogs about the benefits of switching to an online reservation platform while still keeping phone reservations available.</p>
-    <p>Thank you once again for your support. If you have any questions, please don't hesitate to reach out.</p>
-    <p>Best regards,</p>
-    <p>Faraz</p>
-    <p>Founder, BookedPlus</p>
-  `;
 
-    try {
-        // Send mail with defined transport object
-        let info = await transporter.sendMail({
-            from: '"BookedPlus" <your-email@gmail.com>',
-            to: to,
-            subject: subject,
-            html: emailContent,
-        });
-        console.log("Message sent: %s", info.messageId);
-    } catch (error) {
-        console.error("Error sending email:", error);
-        throw error;
-    }
-};
 
 export const notifyAdminMail = async (to, data) => {
     console.log("HERE DATA<<<", to, data)
@@ -117,6 +90,67 @@ export const suggestAdminMail = async (to, data) => {
     <p><strong>City: </strong>${data.city}</p>
     <p><strong>Restaurant Name: </strong>${data.restaurant}</p>
     <p>Now, you may contact them through the info provided above and keep expanding our business...</p>
+    <p>Best regards,</p>
+    <p>Last Call Mail System</p>
+  `;
+
+    try {
+        let info = await transporter.sendMail({
+            from: '"Last Call" <your-email@gmail.com>',
+            to: to,
+            subject: subject,
+            html: emailContent,
+        });
+        console.log("Message sent: %s", info.messageId);
+    } catch (error) {
+        console.error("Error sending email:", error);
+        throw error;
+    }
+};
+export const notifyBookerMail = async ( data) => {
+    console.log("HERE DATA<<<",  data)
+    const subject = `Your Booking Has been Confirmed in ${data.restaurant.name}`;
+    const emailContent = `
+    <p>Dear ${data.reservedFor},</p>
+    <p>Your Booking Has been Confirmed in ${data.restaurant.name}.</p>
+    <p>Here are the details:</p>
+    <p><strong>Time: </strong>${data.time}</p>
+    <p><strong>Date: </strong>${data.date}</p>
+    <p><strong>Number of People: </strong>${data.people}</p>
+    <p><strong>Table Type: </strong>${data.tableType}</p>
+
+    <p>Best regards,</p>
+    <p>Last Call Mail System</p>
+  `;
+
+    try {
+        let info = await transporter.sendMail({
+            from: '"Last Call" <your-email@gmail.com>',
+            to: data.reservedForMail,
+            subject: subject,
+            html: emailContent,
+        });
+        console.log("Message sent: %s", info.messageId);
+    } catch (error) {
+        console.error("Error sending email:", error);
+        throw error;
+    }
+};
+export const notifyBookingAdminMail = async (to, data) => {
+    console.log("HERE DATA<<<",  data)
+    const subject = `A new Booking Has been Confirmed in ${data.restaurant.name}`;
+    const emailContent = `
+    <p>Dear Admin,</p>
+    <p>A new Booking Has been Confirmed in ${data.restaurant.name}.</p>
+    <p>Here are the details:</p>
+    <p><strong>Time: </strong>${data.time}</p>
+    <p><strong>Date: </strong>${data.date}</p>
+    <p><strong>Number of People: </strong>${data.people}</p>
+    <p><strong>Table Type: </strong>${data.tableType}</p>
+    <p><strong>Booker Name: </strong>${data.reservedFor}</p>
+    <p><strong>Booker Email: </strong>${data.reservedForMail}</p>
+    <p><strong>Booker Phone: </strong>${data.reservedForPhone}</p>
+
     <p>Best regards,</p>
     <p>Last Call Mail System</p>
   `;
