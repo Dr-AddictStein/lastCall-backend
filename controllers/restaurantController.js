@@ -48,6 +48,9 @@ export const getReservations = async (req, res) => {
       return String(resv.restaurant._id) === String(restaurant._id);
     });
 
+    // Sort the dex array by the "date" value
+    dex.sort((a, b) => new Date(a.date) - new Date(b.date));
+
     console.log("Filtered Reservations:", dex);
 
     return res.status(200).json(dex);
