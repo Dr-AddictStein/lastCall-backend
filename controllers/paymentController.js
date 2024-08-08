@@ -27,7 +27,7 @@ router.post('/create-checkout-session', async (req, res) => {
       },
     ],
     mode: 'payment',
-    success_url: `http://localhost:5173/foodDetails/${req.body.restaurant}`,
+    success_url: `http://localhost:5173/profile/upcomingbookings`,
     cancel_url: `http://localhost:5173/foodDetails/${req.body.restaurant}`,
   });
 

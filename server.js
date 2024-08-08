@@ -7,6 +7,7 @@ import userRoutes from "./routes/userRoutes.js";
 import cityRoutes from "./routes/cityRoutes.js";
 import regionRoutes from "./routes/regionRoutes.js";
 import restaurantRoutes from "./routes/restaurantRoutes.js";
+import reservationRoutes from "./routes/reservationRoutes.js";
 import fileRoutes from "./routes/fileRoutes.js";
 import paymentIntegration from './controllers/paymentController.js';
 
@@ -38,6 +39,9 @@ app.use("/api/region", regionRoutes);
 
 // restaurant
 app.use("/api/restaurant", restaurantRoutes);
+
+// reservation
+app.use("/api/reservation", reservationRoutes);
 
 //file
 app.use("/api/file",fileRoutes);

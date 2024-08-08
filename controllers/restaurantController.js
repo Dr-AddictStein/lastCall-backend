@@ -56,6 +56,10 @@ export const getReservations = async (req, res) => {
     return res.status(500).json({ error: "Server error" });
   }
 };
+export const getAllReservations = async (req, res) => {
+  const cities = await reservationModel.find({});
+  res.status(200).json(cities);
+};
 export const createRestaurant = async (req, res) => {
   try {
     const newRestaurant = new restaurantModel(req.body);
