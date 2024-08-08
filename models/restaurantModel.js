@@ -38,67 +38,86 @@ const restaurantSchema = new mongoose.Schema(
             type: String,
             // required: true,
         },
-        banner:{
+        banner: {
             type: String,
         },
-        image1:{
+        image1: {
             type: String,
         },
-        image2:{
+        image2: {
             type: String,
         },
-        image3:{
+        image3: {
             type: String,
         },
-        image4:{
+        image4: {
             type: String,
         },
-        operatinghours:[String],
-        specialconditions:[String],
-        description:{
+        operatinghours: [String],
+        specialconditions: [String],
+        description: {
             type: String,
         },
-        category:[String],
-        tables:[
+        category: [String],
+        tables: [
             {
-                date:{
+                date: {
                     type: String,
                 },
-                isclosed:{
+                isclosed: {
                     type: Boolean
                 },
-                breakfast:{
-                    starts:{
+                breakfast: {
+                    starts: {
                         type: String,
                     },
-                    accomodations:{
-                        type: String,
-                    },
-                },
-                lunch:{
-                    starts:{
-                        type: String,
-                    },
-                    accomodations:{
+                    accomodations: {
                         type: String,
                     },
                 },
-                dinnerfirstcall:{
-                    starts:{
+                lunch: {
+                    starts: {
                         type: String,
                     },
-                    accomodations:{
-                        type: String,
-                    },
-                },
-                dinnerlastcall:{
-                    starts:{
-                        type: String,
-                    },
-                    accomodations:{
+                    accomodations: {
                         type: String,
                     },
                 },
+                dinnerfirstcall: {
+                    starts: {
+                        type: String,
+                    },
+                    accomodations: {
+                        type: String,
+                    },
+                },
+                dinnerlastcall: {
+                    starts: {
+                        type: String,
+                    },
+                    accomodations: {
+                        type: String,
+                    },
+                },
+            }
+        ],
+        reviews: [
+            {
+                clientName: {
+                    type: String
+                },
+                clientImage: {
+                    type: String
+                },
+                rating: {
+                    type: Number
+                },
+                desc: {
+                    type: String
+                },
+                date: {
+                    type: String
+                }
             }
         ]
     },

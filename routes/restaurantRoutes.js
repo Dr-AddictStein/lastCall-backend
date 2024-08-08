@@ -1,5 +1,5 @@
 import express from 'express';
-import { addTable, addWeekdayTables, contactAdmin, createRestaurant, deleteRestaurant, deleteTable, getAllReservations, getAllRestaurants, getReservations, getSingleRestaurant, getSingleRestaurantByOwnerEmail, notifyAdmin, suggestAdmin, updateRestaurant } from '../controllers/restaurantController.js';
+import { addTable, addWeekdayTables, contactAdmin, createRestaurant, deleteRestaurant, deleteTable, getAllReservations, getAllRestaurants, getReservations, getSingleRestaurant, getSingleRestaurantByOwnerEmail, notifyAdmin, postReview, suggestAdmin, updateRestaurant } from '../controllers/restaurantController.js';
 
 
 const router=express.Router();
@@ -17,6 +17,7 @@ router.post('/suggestadmin',suggestAdmin);
 router.post('/addtable/:id',addTable);
 router.post('/addweekdaytables/:id',addWeekdayTables);
 router.post('/deletetable/:id',deleteTable);
+router.post('/postReview/:id',postReview);
 
 router.patch('/:id',updateRestaurant);
 

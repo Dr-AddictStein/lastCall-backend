@@ -167,7 +167,7 @@ export const deleteTable = async (req, res) => {
 
   let dex = prevRest;
 
-  let tex=[]
+  let tex = []
 
   for (let i = 0; i < dex.tables.length; i++) {
     if (dex.tables[i].date !== req.body.data.date) {
@@ -175,7 +175,7 @@ export const deleteTable = async (req, res) => {
     }
   }
 
-  dex.tables=tex;
+  dex.tables = tex;
 
 
   console.log("Dateo.!.!.!.", req.body);
@@ -277,4 +277,32 @@ const getAllWeekdays = (dayOfWeek) => {
 
   console.log("ZsP", weekdays);
   return weekdays;
+};
+
+export const postReview = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "Invalid ID.!." });
+  }
+
+  let dex = await restaurantModel.findById(id);
+
+  let revArr = dex.reviews;
+
+
+
+  revArr.push(req.body);
+
+  console.log("lol.!.", revArr)
+
+
+  const restaurant= await restaurantModel.findOneAndUpdate({ _id: id }, {
+    reviews: revArr
+  });
+
+  if (restaurant) {
+    res.status(200).json(restaurant);
+  } else {
+    return res.status(400).json({ error: "No Such restaurant Found.!." });
+  }
 };
