@@ -28,9 +28,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     // required: true,
   },
-  image:{
-    type:String
-  }
+  image: {
+    type: String
+  },
+  restaurant: {
+    type: String,
+  },
 }, { timestamps: true });
 
 userSchema.statics.signup = async function (
@@ -45,7 +48,7 @@ userSchema.statics.signup = async function (
   const exist = await this.findOne({ email });
 
   if (exist) {
-    if(!password)
+    if (!password)
       return exist;
     throw Error("Email already exists.!.");
   }

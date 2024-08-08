@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { notifyRestaurantAdminMail } from "../mailServices/mail.js";
+import { notifyRestaurantAdminMail, notifyRestaurantEmployeeMail } from "../mailServices/mail.js";
 import userModel from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
@@ -68,15 +68,15 @@ export const getSingleUser = async (req, res) => {
 };
 export const createUser = async (req, res) => {
   console.log("REQ", req.body)
-  const { firstname, lastname, email, password, role, phone } = req.body;
+  const { firstname, lastname, email, password, role, phone, restaurant } = req.body;
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
-  const data = { firstname, lastname, email, password: hash, role, phone }
+  const data = { firstname, lastname, email, password: hash, role, phone, restaurant }
   try {
     const newUser = new userModel(data);
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
-    await notifyRestaurantAdminMail(req.body.firstname, req.body.email, req.body.password);
+    await notifyRestaurantEmployeeMail(req.body.firstname, req.body.email, req.body.password);
     return;
   } catch (error) {
     res.status(500).json({ message: error.message });

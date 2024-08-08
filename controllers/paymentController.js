@@ -10,7 +10,7 @@ const router = express.Router();
 const stripe = new Stripe('sk_test_51Pb6MZRqpEIBbqVXD8AaE8G3z65hOxYP908oVaun7IGx5SSZqAfvlrzgiOtsp1k8ySo7mqofnx9vD4mobGoXns8E00rgL7qlVU');
 
 router.post('/create-checkout-session', async (req, res) => {
-  console.log("Reached: ", req.body)
+  console.log("Reached Hua: ", req.body)
   const restu = await restaurantModel.findById(req.body.restaurant);
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
@@ -21,7 +21,7 @@ router.post('/create-checkout-session', async (req, res) => {
           product_data: {
             name: `Booking at ${restu.name}`,
           },
-          unit_amount: 1000, // Amount in cents
+          unit_amount: req.body.cost*100, // Amount in cents
         },
         quantity: 1,
       },
