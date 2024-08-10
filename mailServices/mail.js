@@ -14,15 +14,17 @@ const transporter = nodemailer.createTransport({
     },
 });
 
+///////// YO ARNAB, PLEASE ADD A HYPERLINK TO LASTCALL.CO AT THE END OF EVERY EMAIL
+//////// THANK YOU BOSS!!!!
 
 
 
 export const notifyAdminMail = async (to, data) => {
     console.log("HERE DATA<<<", to, data)
-    const subject = "New Restaurant.!.";
+    const subject = "Restaurant Sign Up";
     const emailContent = `
     <p>Dear Admin,</p>
-    <p>A new restaurant owner has submitted form for registering their restaurant.</p>
+    <p>A restaurant owner has submitted the form for registering their restaurant.</p>
     <p>Here are the details:</p>
     <p><strong>Restaurant Name: </strong>${data.restaurantName}</p>
     <p><strong>City: </strong>${data.city}</p>
@@ -30,9 +32,9 @@ export const notifyAdminMail = async (to, data) => {
     <p><strong>Restaurant Owner Name: </strong>${data.firstName + ' ' + data.lastName}</p>
     <p><strong>Restaurant Owner Mail: </strong>${data.email}</p>
     <p><strong>Restaurant Owner Phone: </strong>${data.phoneNumber}</p>
-    <p>Now, you may contact them through the info provided above and keep expanding our business...</p>
+    <p>You may contact them through the info provided above and keep expanding our business.</p>
     <p>Best regards,</p>
-    <p>Last Call Mail System</p>
+    <p>Last Call Mail</p>
   `;
 
     try {
@@ -50,10 +52,10 @@ export const notifyAdminMail = async (to, data) => {
 };
 export const contactAdminMail = async (to, data) => {
     console.log("HERE DATA<<<", to, data)
-    const subject = "Someone Contacted You from the Contact Us Page.";
+    const subject = "Contact Us";
     const emailContent = `
     <p>Dear Admin,</p>
-    <p>Someone Contacted You from the Contact Us Page.</p>
+    <p>Someone contacted you from the Contact Us page.</p>
     <p>Here are the details:</p>
     <p><strong>First Name: </strong>${data.firstName}</p>
     <p><strong>Last Name: </strong>${data.lastName}</p>
@@ -61,9 +63,9 @@ export const contactAdminMail = async (to, data) => {
     <p><strong>Phone: </strong>${data.phone}</p>
     <p><strong>City: </strong>${data.city}</p>
     <p><strong>Message: </strong>${data.message}</p>
-    <p>Now, you may contact them through the info provided above and keep expanding our business...</p>
+    <p>You may contact them through the info provided above and keep expanding our business.</p>
     <p>Best regards,</p>
-    <p>Last Call Mail System</p>
+    <p>Last Call Mail</p>
   `;
 
     try {
@@ -81,10 +83,10 @@ export const contactAdminMail = async (to, data) => {
 };
 export const suggestAdminMail = async (to, data) => {
     console.log("HERE DATA<<<", to, data)
-    const subject = "Someone Suggested a Restaurant.";
+    const subject = "Suggest a Restaurant";
     const emailContent = `
     <p>Dear Admin,</p>
-    <p>Someone Suggested a Restaurant.</p>
+    <p>Someone contacted you from the Suggest a Restaurant page.</p>
     <p>Here are the details:</p>
     <p><strong>First Name: </strong>${data.firstName}</p>
     <p><strong>Last Name: </strong>${data.lastName}</p>
@@ -92,9 +94,9 @@ export const suggestAdminMail = async (to, data) => {
     <p><strong>Phone: </strong>${data.phone}</p>
     <p><strong>City: </strong>${data.city}</p>
     <p><strong>Restaurant Name: </strong>${data.restaurant}</p>
-    <p>Now, you may contact them through the info provided above and keep expanding our business...</p>
+    <p>You may contact them through the info provided above and keep expanding our business.</p>
     <p>Best regards,</p>
-    <p>Last Call Mail System</p>
+    <p>Last Call Mail</p>
   `;
 
     try {
@@ -112,10 +114,10 @@ export const suggestAdminMail = async (to, data) => {
 };
 export const notifyBookerMail = async ( data) => {
     console.log("HERE DATA<<<",  data)
-    const subject = `Your Booking Has been Confirmed in ${data.restaurant.name}`;
+    const subject = `Last Call - Reservation Confirmed at ${data.restaurant.name}`;
     const emailContent = `
     <p>Dear ${data.reservedFor},</p>
-    <p>Your Booking Has been Confirmed in ${data.restaurant.name}.</p>
+    <p>Your reservation Has been confirmed at ${data.restaurant.name}.</p>
     <p>Here are the details:</p>
     <p><strong>Time: </strong>${data.time}</p>
     <p><strong>Date: </strong>${data.date}</p>
@@ -123,7 +125,7 @@ export const notifyBookerMail = async ( data) => {
     <p><strong>Table Type: </strong>${data.tableType}</p>
 
     <p>Best regards,</p>
-    <p>Last Call Mail System</p>
+    <p>Last Call Reservations</p>
   `;
 
     try {
@@ -141,21 +143,21 @@ export const notifyBookerMail = async ( data) => {
 };
 export const notifyBookingAdminMail = async (to, data) => {
     console.log("HERE DATA<<<",  data)
-    const subject = `A new Booking Has been Confirmed in ${data.restaurant.name}`;
+    const subject = `Last Call - Reservation Confirmed at ${data.restaurant.name}`;
     const emailContent = `
     <p>Dear Admin,</p>
-    <p>A new Booking Has been Confirmed in ${data.restaurant.name}.</p>
+    <p>A new reservation has been confirmed at ${data.restaurant.name}.</p>
     <p>Here are the details:</p>
     <p><strong>Time: </strong>${data.time}</p>
     <p><strong>Date: </strong>${data.date}</p>
     <p><strong>Number of People: </strong>${data.people}</p>
     <p><strong>Table Type: </strong>${data.tableType}</p>
-    <p><strong>Booker Name: </strong>${data.reservedFor}</p>
-    <p><strong>Booker Email: </strong>${data.reservedForMail}</p>
-    <p><strong>Booker Phone: </strong>${data.reservedForPhone}</p>
+    <p><strong>Reservation Name: </strong>${data.reservedFor}</p>
+    <p><strong>Reservation Email: </strong>${data.reservedForMail}</p>
+    <p><strong>Reservation Phone: </strong>${data.reservedForPhone}</p>
 
     <p>Best regards,</p>
-    <p>Last Call Mail System</p>
+    <p>Last Call Reservations</p>
   `;
 
     try {
@@ -175,16 +177,17 @@ export const notifyBookingAdminMail = async (to, data) => {
 
 export const notifyRestaurantAdminMail = async ( name, email, password) => {
     console.log("HERE DATA<<<", name,email,password)
-    const subject = "Your Restaurant has been verified.!.";
+    const subject = "Last Call - Restaurant Registration";
     const emailContent = `
     <p>Dear ${name},</p>
-    <p>Your Restaurant has been verified by the Last Call Management.</p>
-    <p>Here are your login Credentials:</p>
+    <p>Your restaurant has been verified by Last Call management.</p>
+    <p>Here are your login credentials:</p>
     <p><strong>Email: </strong>${email}</p>
     <p><strong>Password: </strong>${password}</p>
-    <p>You can and recommended to change your password anytime from the profile page of Last Call Website.</p>
+    <p>Please update your password from your profile page on our website.</p>
+    
     <p>Best regards,</p>
-    <p>Last Call Mail System</p>
+    <p>Last Call Mail</p>
   `;
 
     try {
@@ -202,16 +205,17 @@ export const notifyRestaurantAdminMail = async ( name, email, password) => {
 };
 export const notifyRestaurantEmployeeMail = async ( name, email, password) => {
     console.log("HERE DATA<<<", name,email,password)
-    const subject = "Your Restaurant has been verified.!.";
+    const subject = "Last Call - Employee Registration";
     const emailContent = `
     <p>Dear ${name},</p>
-    <p>Your Restaurant has been verified by the Last Call Management.</p>
+    <p>Your employee status has been verified by Last Call management. Enjoy an additional 50% off all reservation fees!</p>
     <p>Here are your login Credentials:</p>
     <p><strong>Email: </strong>${email}</p>
     <p><strong>Password: </strong>${password}</p>
-    <p>You can and recommended to change your password anytime from the profile page of Last Call Website.</p>
+    <p>Please update your password from your profile page on our website.</p>
+    
     <p>Best regards,</p>
-    <p>Last Call Mail System</p>
+    <p>Last Call Mail</p>
   `;
 
     try {
