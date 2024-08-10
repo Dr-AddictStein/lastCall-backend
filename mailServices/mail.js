@@ -7,8 +7,10 @@ const transporter = nodemailer.createTransport({
     secure: true,
     service: "gmail",
     auth: {
-        user: "reservations@lastcall.co",
-        pass: "ptdl jnyp qhuq srph",
+        // user: "reservations@lastcall.co",
+        // pass: "ptdl jnyp qhuq srph",
+        user: "codingjedi048@gmail.com",
+        pass: "mvqr iove mbwh mgon",
     },
 });
 
@@ -216,6 +218,38 @@ export const notifyRestaurantEmployeeMail = async ( name, email, password) => {
         let info = await transporter.sendMail({
             from: '"Last Call" <your-email@gmail.com>',
             to: email,
+            subject: subject,
+            html: emailContent,
+        });
+        console.log("Message sent: %s", info.messageId);
+    } catch (error) {
+        console.error("Error sending email:", error);
+        throw error;
+    }
+};
+
+
+export const cancelReservationMailToAdmin = async ( to, data) => {
+    console.log("HERE DATA<<<", to,data)
+    const subject = "A Reservation Has been cancelled by the Customer.!.";
+    const emailContent = `
+    <p>Dear Admin,</p>
+    <p>A Reservation Has been cancelled by a Customer.</p>
+    <p>Here are the Details:</p>
+    <p><strong>Customer Email: </strong>${data.reservedForMail}</p>
+    <p><strong>Customer Phone: </strong>${data.reservedForPhone}</p>
+    <p><strong>Restaurant: </strong>${data.restaurant.name}</p>
+    <p><strong>Restaurant Owner Mail: </strong>${data.restaurant.email}</p>
+    <p><strong>Restaurant Owner Phone: </strong>${data.restaurant.phone}</p>
+    <p>Please Take Necessary Actions.</p>
+    <p>Best regards,</p>
+    <p>Last Call Mail System</p>
+  `;
+
+    try {
+        let info = await transporter.sendMail({
+            from: '"Last Call" <your-email@gmail.com>',
+            to: to,
             subject: subject,
             html: emailContent,
         });
