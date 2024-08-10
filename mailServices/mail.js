@@ -34,7 +34,7 @@ export const notifyAdminMail = async (to, data) => {
     <p><strong>Restaurant Owner Phone: </strong>${data.phoneNumber}</p>
     <p>You may contact them through the info provided above and keep expanding our business.</p>
     <p>Best regards,</p>
-    <p>Last Call Mail</p>
+    <p><a href="http://localhost:5173/">Last Call</a> Mail</p>
   `;
 
     try {
@@ -65,7 +65,7 @@ export const contactAdminMail = async (to, data) => {
     <p><strong>Message: </strong>${data.message}</p>
     <p>You may contact them through the info provided above and keep expanding our business.</p>
     <p>Best regards,</p>
-    <p>Last Call Mail</p>
+    <p><a href="http://localhost:5173/">Last Call</a> Mail</p>
   `;
 
     try {
@@ -96,7 +96,7 @@ export const suggestAdminMail = async (to, data) => {
     <p><strong>Restaurant Name: </strong>${data.restaurant}</p>
     <p>You may contact them through the info provided above and keep expanding our business.</p>
     <p>Best regards,</p>
-    <p>Last Call Mail</p>
+    <p><a href="http://localhost:5173/">Last Call</a> Mail</p>
   `;
 
     try {
@@ -125,7 +125,7 @@ export const notifyBookerMail = async ( data) => {
     <p><strong>Table Type: </strong>${data.tableType}</p>
 
     <p>Best regards,</p>
-    <p>Last Call Reservations</p>
+    <p><a href="http://localhost:5173/">Last Call</a> Mail</p>
   `;
 
     try {
@@ -157,7 +157,7 @@ export const notifyBookingAdminMail = async (to, data) => {
     <p><strong>Reservation Phone: </strong>${data.reservedForPhone}</p>
 
     <p>Best regards,</p>
-    <p>Last Call Reservations</p>
+    <p><a href="http://localhost:5173/">Last Call</a> Mail</p>
   `;
 
     try {
@@ -187,8 +187,9 @@ export const notifyRestaurantAdminMail = async ( name, email, password) => {
     <p>Please update your password from your profile page on our website.</p>
     
     <p>Best regards,</p>
-    <p>Last Call Mail</p>
+    <p><a href="http://localhost:5173/">Last Call</a> Mail</p>
   `;
+  
 
     try {
         let info = await transporter.sendMail({
@@ -215,7 +216,7 @@ export const notifyRestaurantEmployeeMail = async ( name, email, password) => {
     <p>Please update your password from your profile page on our website.</p>
     
     <p>Best regards,</p>
-    <p>Last Call Mail</p>
+    <p><a href="http://localhost:5173/">Last Call</a> Mail</p>
   `;
 
     try {
@@ -247,7 +248,7 @@ export const cancelReservationMailToAdmin = async ( to, data) => {
     <p><strong>Restaurant Owner Phone: </strong>${data.restaurant.phone}</p>
     <p>Please Take Necessary Actions.</p>
     <p>Best regards,</p>
-    <p>Last Call Mail System</p>
+    <p><a href="http://localhost:5173/">Last Call</a> Mail</p>
   `;
 
     try {
