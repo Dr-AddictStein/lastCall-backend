@@ -1,14 +1,26 @@
 import nodemailer from "nodemailer";
 
 
+// const transporter = nodemailer.createTransport({
+//     host: "smtp.gmail.com",
+//     port: 465,
+//     secure: true,
+//     service: "gmail",
+//     auth: {
+//         // user: "samohelalex@gmail.com",
+//         // pass: "rwmg qyqq rkgv zvyx",
+//         user: "codingjedi048@gmail.com",
+//         pass: "mvqr iove mbwh mgon",
+//     },
+// });
 const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    service: "gmail",
+    host: "smtp.mail.me.com",
+    port: 587,
+    secure: false,
+    service: "iCloud",
     auth: {
-        user: "samohelalex@gmail.com",
-        pass: "rwmg qyqq rkgv zvyx",
+        user: "alex@samohel.com",
+        pass: "wxey-qwae-syyk-kpyi",
         // user: "codingjedi048@gmail.com",
         // pass: "mvqr iove mbwh mgon",
     },
@@ -70,7 +82,8 @@ export const contactAdminMail = async (to, data) => {
 
     try {
         let info = await transporter.sendMail({
-            from: '"Last Call" <your-email@gmail.com>',
+            // from: '"Last Call" <your-email@gmail.com>',
+            from: '"Last Call" <alex@samohel.com>',
             to: to,
             subject: subject,
             html: emailContent,
@@ -253,7 +266,8 @@ export const cancelReservationMailToAdmin = async ( to, data) => {
 
     try {
         let info = await transporter.sendMail({
-            from: '"Last Call" <your-email@gmail.com>',
+            // from: '"Last Call" <your-email@gmail.com>',
+            from: '"Last Call" <alex@samohel.com>',
             to: to,
             subject: subject,
             html: emailContent,
