@@ -16,7 +16,7 @@ import nodemailer from "nodemailer";
 const transporter = nodemailer.createTransport({
     host: "smtp.mail.me.com",
     port: 587,
-    secure: false,
+    secureConnection: false,
     service: "iCloud",
     auth: {
         user: "alex@samohel.com",
@@ -51,7 +51,7 @@ export const notifyAdminMail = async (to, data) => {
 
     try {
         let info = await transporter.sendMail({
-            from: '"Last Call" <your-email@gmail.com>',
+            from: '"Last Call" <alex@samohel.com>',
             to: to,
             subject: subject,
             html: emailContent,
@@ -82,7 +82,7 @@ export const contactAdminMail = async (to, data) => {
 
     try {
         let info = await transporter.sendMail({
-            // from: '"Last Call" <your-email@gmail.com>',
+            // from: '"Last Call" <alex@samohel.com>',
             from: '"Last Call" <alex@samohel.com>',
             to: to,
             subject: subject,
@@ -114,7 +114,7 @@ export const suggestAdminMail = async (to, data) => {
 
     try {
         let info = await transporter.sendMail({
-            from: '"Last Call" <your-email@gmail.com>',
+            from: '"Last Call" <alex@samohel.com>',
             to: to,
             subject: subject,
             html: emailContent,
@@ -143,7 +143,7 @@ export const notifyBookerMail = async ( data) => {
 
     try {
         let info = await transporter.sendMail({
-            from: '"Last Call" <your-email@gmail.com>',
+            from: '"Last Call" <alex@samohel.com>',
             to: data.reservedForMail,
             subject: subject,
             html: emailContent,
@@ -175,7 +175,7 @@ export const notifyBookingAdminMail = async (to, data) => {
 
     try {
         let info = await transporter.sendMail({
-            from: '"Last Call" <your-email@gmail.com>',
+            from: '"Last Call" <alex@samohel.com>',
             to: to,
             subject: subject,
             html: emailContent,
@@ -206,7 +206,7 @@ export const notifyRestaurantAdminMail = async ( name, email, password) => {
 
     try {
         let info = await transporter.sendMail({
-            from: '"Last Call" <your-email@gmail.com>',
+            from: '"Last Call" <alex@samohel.com>',
             to: email,
             subject: subject,
             html: emailContent,
@@ -234,7 +234,7 @@ export const notifyRestaurantEmployeeMail = async ( name, email, password) => {
 
     try {
         let info = await transporter.sendMail({
-            from: '"Last Call" <your-email@gmail.com>',
+            from: '"Last Call" <alex@samohel.com>',
             to: email,
             subject: subject,
             html: emailContent,
@@ -266,7 +266,7 @@ export const cancelReservationMailToAdmin = async ( to, data) => {
 
     try {
         let info = await transporter.sendMail({
-            // from: '"Last Call" <your-email@gmail.com>',
+            // from: '"Last Call" <alex@samohel.com>',
             from: '"Last Call" <alex@samohel.com>',
             to: to,
             subject: subject,
