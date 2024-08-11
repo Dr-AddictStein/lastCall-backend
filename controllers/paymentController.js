@@ -76,7 +76,7 @@ router.post('/create-checkout-session', async (req, res) => {
   let dex = restu;
 
   for(let i=0;i<dex.tables.length;i++){
-    if(convertToAbbreviatedMonthName(dex.tables[i].date)==="Thu Aug 15 2024"){
+    if(convertToAbbreviatedMonthName(dex.tables[i].date)===savedResv.date){
       if(savedResv.tableType==="Breakfast"){
         dex.tables[i].breakfast.accomodations = reduceSingleNumberString(dex.tables[i].breakfast.accomodations);
       }
